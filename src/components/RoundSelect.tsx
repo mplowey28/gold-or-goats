@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from 'react'
 import {
   Box,
   Button,
@@ -11,49 +11,49 @@ import {
   OutlinedInput,
   Select,
   SelectChangeEvent,
-} from "@mui/material";
+} from '@mui/material'
 
 const RoundSelect = () => {
-  const [open, setOpen] = useState(false);
-  const [rounds, setRounds] = useState<number>(0);
+  const [open, setOpen] = useState(false)
+  const [rounds, setRounds] = useState<number>(0)
 
   const handleChange = (event: SelectChangeEvent<number>) => {
-    setRounds(Number(event.target.value));
-  };
+    setRounds(Number(event.target.value))
+  }
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = (event: SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== "backdropClick") {
-      setOpen(false);
+    if (reason !== 'backdropClick') {
+      setOpen(false)
     }
-  };
+  }
 
-  const possibleRounds = Array.from(Array(101).keys());
+  const possibleRounds = Array.from(Array(101).keys())
   return (
     <div>
-      <Button onClick={handleClickOpen} variant="outlined">
+      <Button onClick={handleClickOpen} variant='outlined'>
         START A NEW GAME
       </Button>
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>How many rounds?</DialogTitle>
         <DialogContent>
           <Box
-            component="form"
-            justifyContent="center"
-            sx={{ display: "flex", flexWrap: "wrap" }}
+            component='form'
+            justifyContent='center'
+            sx={{ display: 'flex', flexWrap: 'wrap' }}
           >
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel htmlFor="demo-dialog-native">Rounds</InputLabel>
+              <InputLabel htmlFor='demo-dialog-native'>Rounds</InputLabel>
               <Select
                 native
                 value={rounds}
                 onChange={handleChange}
-                input={<OutlinedInput label="Rounds" id="demo-dialog-native" />}
+                input={<OutlinedInput label='Rounds' id='demo-dialog-native' />}
               >
-                <option aria-label="None" value="" />
+                <option aria-label='None' value='' />
                 {possibleRounds.map((n: number, i: number) => (
                   <option key={i} value={n}>
                     {n}
@@ -69,7 +69,7 @@ const RoundSelect = () => {
         </DialogActions>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
-export default RoundSelect;
+export default RoundSelect

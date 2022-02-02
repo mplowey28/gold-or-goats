@@ -13,7 +13,7 @@ import {
   SelectChangeEvent,
 } from '@mui/material'
 
-function RoundSelect() {
+const RoundSelect = () => {
   const [open, setOpen] = useState(false)
   const [rounds, setRounds] = useState<number>(0)
 

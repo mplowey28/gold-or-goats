@@ -54,8 +54,8 @@ const RoundSelect = () => {
                 input={<OutlinedInput label='Rounds' id='demo-dialog-native' />}
               >
                 <option aria-label='None' value='' />
-                {possibleRounds.map((n: number, i: number) => (
-                  <option key={i} value={n}>
+                {possibleRounds.map((n: number) => (
+                  <option key={n} value={n}>
                     {n}
                   </option>
                 ))}

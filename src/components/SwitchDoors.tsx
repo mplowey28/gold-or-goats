@@ -1,5 +1,5 @@
 import { SyntheticEvent, useEffect, useState } from 'react'
-import { Box, Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
 
 type SwitchDoorProps = {
   open: boolean
@@ -7,28 +7,25 @@ type SwitchDoorProps = {
 }
 const SwitchDoors = ({ open, rounds }: SwitchDoorProps) => {
   const [switchOpen, setSwitchOpen] = useState(false)
-  const [swtichDoors, setSwitchDoors] = useState<boolean>()
 
   useEffect(() => {
     rounds > 0 && !open && setSwitchOpen(true)
   }, [open, rounds])
 
-  const handleClose = (event: SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== 'backdropClick') {
-      setSwitchOpen(false)
-    }
+  const handleClose = () => {
+    setSwitchOpen(false)
   }
-  const handleYes = (event: SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== 'backdropClick') {
-      setSwitchDoors(true)
-      setSwitchOpen(false)
+
+  const handleChange = (e: SyntheticEvent<HTMLButtonElement>) => {
+    let data
+    if (e.currentTarget.name === 'yes') {
+      data = { rounds: rounds, switch: true }
     }
-  }
-  const handleNo = (event: SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== 'backdropClick') {
-      setSwitchDoors(false)
-      setSwitchOpen(false)
+    if (e.currentTarget.name === 'no') {
+      data = { rounds: rounds, switch: false }
     }
+    setSwitchOpen(false)
+    console.log(data)
   }
 
   return (
@@ -36,13 +33,23 @@ const SwitchDoors = ({ open, rounds }: SwitchDoorProps) => {
       <Dialog disableEscapeKeyDown open={switchOpen} onClose={handleClose}>
         <DialogTitle sx={{ textAlign: 'center' }}>Switch Doors?</DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose} variant='outlined'>
+          <Button onClick={handleChange} variant='outlined'>
             Cancel
           </Button>
-          <Button color='success' variant='outlined'>
+          <Button
+            name='yes'
+            color='success'
+            onClick={handleChange}
+            variant='outlined'
+          >
             Yes
           </Button>
-          <Button color='error' onClick={handleNo} variant='outlined'>
+          <Button
+            name='no'
+            color='error'
+            onClick={handleChange}
+            variant='outlined'
+          >
             No
           </Button>
         </DialogActions>

@@ -31,6 +31,12 @@ const RoundSelect = () => {
       setOpen(false)
     }
   }
+  const handleCancel = (event: SyntheticEvent<unknown>, reason?: string) => {
+    if (reason !== 'backdropClick') {
+      setRounds(0)
+      setOpen(false)
+    }
+  }
 
   const possibleRounds: number[] = Array.from(Array(101).keys())
   return (
@@ -65,7 +71,7 @@ const RoundSelect = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant='outlined'>
+          <Button onClick={handleCancel} variant='outlined'>
             Cancel
           </Button>
           <Button onClick={handleClose} variant='outlined'>

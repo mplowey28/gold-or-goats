@@ -1,13 +1,14 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Goat from './assets/images/goat.png'
 import Gold from './assets/images/goldBars.png'
+//import Results from './components/Results'
 import RoundSelect from './components/RoundSelect'
 
 const App = () => (
   <Stack
     bgcolor='background.default'
     height='100vh'
-    justifyContent='center'
+    justifyContent='flex-start'
     p={2}
     textAlign='center'
     width='100%'
@@ -33,6 +34,7 @@ const App = () => (
       />
     </Stack>
     <RoundSelect />
+    {/* <Results /> */}
   </Stack>
 )
 

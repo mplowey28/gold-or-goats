@@ -12,9 +12,10 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material'
+import SwitchDoors from './SwitchDoors'
 
 const RoundSelect = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean>(false)
   const [rounds, setRounds] = useState<number>(0)
 
   const handleChange = (event: SelectChangeEvent<number>) => {
@@ -31,9 +32,9 @@ const RoundSelect = () => {
     }
   }
 
-  const possibleRounds = Array.from(Array(101).keys())
+  const possibleRounds: number[] = Array.from(Array(101).keys())
   return (
-    <div>
+    <Box>
       <Button onClick={handleClickOpen} variant='outlined'>
         START A NEW GAME
       </Button>
@@ -64,11 +65,16 @@ const RoundSelect = () => {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button onClick={handleClose} variant='outlined'>
+            Cancel
+          </Button>
+          <Button onClick={handleClose} variant='outlined'>
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
-    </div>
+      <SwitchDoors rounds={rounds} open={open} />
+    </Box>
   )
 }
 

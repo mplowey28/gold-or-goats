@@ -46,12 +46,12 @@ const RoundSelect = () => {
             sx={{ display: 'flex', flexWrap: 'wrap' }}
           >
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel htmlFor='demo-dialog-native'>Rounds</InputLabel>
+              <InputLabel htmlFor='rounds'>Rounds</InputLabel>
               <Select
                 native
                 value={rounds}
                 onChange={handleChange}
-                input={<OutlinedInput label='Rounds' id='demo-dialog-native' />}
+                input={<OutlinedInput label='Rounds' id='rounds' />}
               >
                 <option aria-label='None' value='' />
                 {possibleRounds.map((n: number) => (

@@ -6,15 +6,11 @@ type SwitchDoorProps = {
   rounds: number
 }
 const SwitchDoors = ({ open, rounds }: SwitchDoorProps) => {
-  const [switchOpen, setSwitchOpen] = useState(false)
+  const [switchOpen, setSwitchOpen] = useState<boolean>(false)
 
   useEffect(() => {
     rounds > 0 && !open && setSwitchOpen(true)
   }, [open, rounds])
-
-  const handleClose = () => {
-    setSwitchOpen(false)
-  }
 
   const handleChange = (e: SyntheticEvent<HTMLButtonElement>) => {
     let data
@@ -30,7 +26,11 @@ const SwitchDoors = ({ open, rounds }: SwitchDoorProps) => {
 
   return (
     <>
-      <Dialog disableEscapeKeyDown open={switchOpen} onClose={handleClose}>
+      <Dialog
+        disableEscapeKeyDown
+        open={switchOpen}
+        onClose={() => setSwitchOpen(false)}
+      >
         <DialogTitle sx={{ textAlign: 'center' }}>Switch Doors?</DialogTitle>
         <DialogActions>
           <Button onClick={handleChange} variant='outlined'>

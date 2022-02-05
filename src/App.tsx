@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import Goat from './assets/images/goat.png'
 import Gold from './assets/images/goldBars.png'
-//import Results from './components/Results'
 import RoundSelect from './components/RoundSelect'
 
 const App = () => (
@@ -34,7 +33,6 @@ const App = () => (
       />
     </Stack>
     <RoundSelect />
-    {/* <Results /> */}
   </Stack>
 )
 

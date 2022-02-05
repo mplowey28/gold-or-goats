@@ -18,14 +18,6 @@ const RoundSelect = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [rounds, setRounds] = useState<number>(0)
 
-  const handleChange = (event: SelectChangeEvent<number>) => {
-    setRounds(Number(event.target.value))
-  }
-
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
-
   const handleClose = (event: SyntheticEvent<unknown>, reason?: string) => {
     if (reason !== 'backdropClick') {
       setOpen(false)
@@ -41,7 +33,7 @@ const RoundSelect = () => {
   const possibleRounds: number[] = Array.from(Array(101).keys())
   return (
     <Box>
-      <Button onClick={handleClickOpen} variant='outlined'>
+      <Button onClick={() => setOpen(true)} variant='outlined'>
         START A NEW GAME
       </Button>
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
@@ -57,7 +49,9 @@ const RoundSelect = () => {
               <Select
                 native
                 value={rounds}
-                onChange={handleChange}
+                onChange={(event: SelectChangeEvent<number>) =>
+                  setRounds(Number(event.target.value))
+                }
                 input={<OutlinedInput label='Rounds' id='rounds' />}
               >
                 <option aria-label='None' value='' />
@@ -74,7 +68,7 @@ const RoundSelect = () => {
           <Button onClick={handleCancel} variant='outlined'>
             Cancel
           </Button>
-          <Button onClick={handleClose} variant='outlined'>
+          <Button onClick={() => setOpen(false)} variant='outlined'>
             Ok
           </Button>
         </DialogActions>

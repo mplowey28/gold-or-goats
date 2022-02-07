@@ -72,12 +72,19 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
           {!loading ? (
             <Stack>
               <Stack height='300px' width='300px'>
-                <Chart result={result} rounds={simParams?.state.rounds} />
+                {result && simParams?.state.rounds && !error ? (
+                  <Chart
+                    result={result && result}
+                    rounds={simParams?.state.rounds}
+                  />
+                ) : (
+                  <Alert security='error'>Something went wrong!</Alert>
+                )}
               </Stack>
               <Stack direction='row' pt={2} justifyContent='center' spacing={2}>
-                <Typography>Wins: {result}</Typography>
-                <Typography>Loses: {loses}</Typography>
-                <Typography>Win%: {winPer}%</Typography>
+                <Typography>{result ? `Wins: ${result}` : 'N/A'}</Typography>
+                <Typography>{loses ? `Loses: ${loses}` : 'N/A'}</Typography>
+                <Typography>{winPer ? `Win%: ${winPer}%` : 'N/A'}</Typography>
               </Stack>
             </Stack>
           ) : (

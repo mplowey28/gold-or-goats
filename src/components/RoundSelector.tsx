@@ -17,7 +17,7 @@ const RoundSelector = ({
   toggleDialogViewer,
 }: ItoggleDialogViewer) => {
   const simParams = useSimParams()
-  const possibleRounds: number[] = Array.from(Array(101).keys())
+  const possibleRounds: number[] = Array.from({ length: 100 }, (_, i) => i + 1)
 
   return (
     <>
@@ -44,7 +44,6 @@ const RoundSelector = ({
               }
               input={<OutlinedInput label='Rounds' id='rounds' />}
             >
-              <option aria-label='None' value='' />
               {possibleRounds.map((n: number) => (
                 <option key={n} value={n}>
                   {n}

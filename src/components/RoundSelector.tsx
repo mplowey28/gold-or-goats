@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useSimParams } from '../context/SimContext'
 import {
   Box,

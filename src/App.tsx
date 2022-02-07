@@ -17,6 +17,9 @@ const App = () => (
       <Typography color='text.primary' variant='h3'>
         Welcome to Gold or Goats
       </Typography>
+      <Typography color='text.primary' variant='body1'>
+        A new twist on the classic Monety Hall problem.
+      </Typography>
       <Stack alignItems='center' direction='row' justifyContent='center' my={2}>
         <Box
           component='img'

@@ -4,14 +4,19 @@ import { Pie } from 'react-chartjs-2'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const Chart = () => {
+interface PChart {
+  result: number | null
+  rounds: number | undefined
+}
+
+const Chart = ({ result, rounds }: PChart) => {
   const theme = useTheme()
+  const loses = rounds && result && rounds - result
   const data = {
-    labels: ['Win', 'Lose'],
     datasets: [
       {
         label: 'Wins vs loses',
-        data: [75, 25],
+        data: [result, loses],
         backgroundColor: [
           `${theme.palette.success.main}`,
           `${theme.palette.error.main}`,

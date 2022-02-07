@@ -1,16 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import {
-  Box,
+  Alert,
   Button,
   DialogActions,
   DialogTitle,
   DialogContent,
   Stack,
+  CircularProgress,
+  Typography,
 } from '@mui/material'
 import { SyntheticEvent } from 'react'
 import { useSimParams } from '../context/SimContext'
 import Chart from './Chart'
-
 interface PResultsView {
   handleCancel: (
     event: SyntheticEvent<unknown>,
@@ -19,7 +20,19 @@ interface PResultsView {
 }
 
 const ResultsViewer = ({ handleCancel }: PResultsView) => {
+  const [result, setResult] = useState<number | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState()
   const simParams = useSimParams()
+
+  const loses =
+    simParams?.state.rounds && result && simParams?.state.rounds - result
+
+  const winPer =
+    simParams?.state.rounds &&
+    result &&
+    Math.floor((result / simParams?.state.rounds) * 100)
+
   const postData = async (url = '', data = {}) => {
     const response = await fetch(url, {
       method: 'POST',
@@ -32,24 +45,46 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
   }
 
   useEffect(() => {
-    postData('https://gold-or-goats.herokuapp.com/', simParams?.state).then(
-      (data) => console.log(data)
-    )
+    setLoading(true)
+    postData('https://gold-or-goats.herokuapp.com/', simParams?.state)
+      .then((data) => setResult(data))
+      .catch(setError)
+      .finally(() => setLoading(false))
   }, [simParams])
 
   return (
     <>
       <DialogTitle>Results</DialogTitle>
       <DialogContent>
-        <Box
-          component='div'
-          justifyContent='center'
-          sx={{ display: 'flex', flexWrap: 'wrap' }}
-        >
-          <Stack height='400px' width='400px'>
-            <Chart />
+        {!error ? (
+          <Stack justifyContent='center'>
+            {!loading ? (
+              <Stack>
+                <Stack height='300px' width='300px'>
+                  <Chart result={result} rounds={simParams?.state.rounds} />
+                </Stack>
+                <Stack
+                  direction='row'
+                  pt={2}
+                  justifyContent='center'
+                  spacing={2}
+                >
+                  <Typography>Wins: {result}</Typography>
+                  <Typography>Loses: {loses}</Typography>
+                  <Typography>Win%: {winPer}%</Typography>
+                </Stack>
+              </Stack>
+            ) : (
+              <Stack>
+                <CircularProgress />
+              </Stack>
+            )}
           </Stack>
-        </Box>
+        ) : (
+          <Stack>
+            <Alert severity='error'>Something went wrong!</Alert>
+          </Stack>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel} variant='outlined'>

@@ -56,31 +56,30 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
     <>
       <DialogTitle>Results</DialogTitle>
       <DialogContent>
-        <Stack justifyContent='center'>
+        <Stack alignItems='center' justifyContent='center'>
           {!loading ? (
-            <Stack>
-              <Stack height='auto' width='300px'>
-                {result && simParams?.state.rounds ? (
-                  <Stack>
-                    <Chart
-                      result={result && result}
-                      rounds={simParams?.state.rounds}
-                    />
-                    <Stack
-                      direction='row'
-                      pt={2}
-                      justifyContent='center'
-                      spacing={2}
-                    >
-                      <Typography>Wins: {result}</Typography>
-                      <Typography>Loses: {loses}</Typography>
-                      <Typography>Win%: {winPer}%</Typography>
-                    </Stack>
+            <Stack height='auto' width='90%' justifyContent='space-between'>
+              {result && simParams?.state.rounds ? (
+                <Stack>
+                  <Chart
+                    result={result && result}
+                    rounds={simParams?.state.rounds}
+                  />
+                  <Stack
+                    direction='row'
+                    justifyContent='center'
+                    pt={2}
+                    textAlign='center'
+                    spacing={2}
+                  >
+                    <Typography>Wins: {result}</Typography>
+                    <Typography>Loses: {loses}</Typography>
+                    <Typography>Win%: {winPer}%</Typography>
                   </Stack>
-                ) : (
-                  <Alert severity='error'>Something went wrong!</Alert>
-                )}
-              </Stack>
+                </Stack>
+              ) : (
+                <Alert severity='error'>Something went wrong!</Alert>
+              )}
             </Stack>
           ) : (
             <Stack>

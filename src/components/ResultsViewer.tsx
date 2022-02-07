@@ -78,7 +78,7 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
                     rounds={simParams?.state.rounds}
                   />
                 ) : (
-                  <Alert security='error'>Something went wrong!</Alert>
+                  <Alert severity='error'>Something went wrong!</Alert>
                 )}
               </Stack>
               <Stack direction='row' pt={2} justifyContent='center' spacing={2}>

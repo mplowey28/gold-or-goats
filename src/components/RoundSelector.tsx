@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useSimParams } from '../context/SimContext'
 import {
   Box,
@@ -17,6 +18,7 @@ const RoundSelector = ({
   toggleDialogViewer,
 }: ItoggleDialogViewer) => {
   const simParams = useSimParams()
+  const [error, setError] = useState(false)
   const possibleRounds: number[] = Array.from({ length: 100 }, (_, i) => i + 1)
 
   return (
@@ -31,6 +33,7 @@ const RoundSelector = ({
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel htmlFor='rounds'>Rounds</InputLabel>
             <Select
+              error={error}
               native
               value={simParams?.state.rounds}
               onChange={(event: SelectChangeEvent<number>) =>
@@ -44,6 +47,7 @@ const RoundSelector = ({
               }
               input={<OutlinedInput label='Rounds' id='rounds' />}
             >
+              <option value={0}>0</option>
               {possibleRounds.map((n: number) => (
                 <option key={n} value={n}>
                   {n}
@@ -59,6 +63,11 @@ const RoundSelector = ({
         </Button>
         <Button
           onClick={() => {
+            if (!simParams?.state.rounds) {
+              setError(true)
+              return
+            }
+            setError(false)
             toggleDialogViewer('roundSelector', false),
               toggleDialogViewer('switchSelector', true)
           }}

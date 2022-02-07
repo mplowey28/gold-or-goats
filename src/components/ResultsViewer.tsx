@@ -52,39 +52,40 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
       .finally(() => setLoading(false))
   }, [simParams])
 
+  if (error)
+    return (
+      <DialogContent>
+        <Stack justifyContent='center'>
+          <Alert severity='error'>Something went wrong!</Alert>
+          <Button onClick={handleCancel} variant='outlined'>
+            Reset
+          </Button>
+        </Stack>
+      </DialogContent>
+    )
+
   return (
     <>
       <DialogTitle>Results</DialogTitle>
       <DialogContent>
-        {!error ? (
-          <Stack justifyContent='center'>
-            {!loading ? (
-              <Stack>
-                <Stack height='300px' width='300px'>
-                  <Chart result={result} rounds={simParams?.state.rounds} />
-                </Stack>
-                <Stack
-                  direction='row'
-                  pt={2}
-                  justifyContent='center'
-                  spacing={2}
-                >
-                  <Typography>Wins: {result}</Typography>
-                  <Typography>Loses: {loses}</Typography>
-                  <Typography>Win%: {winPer}%</Typography>
-                </Stack>
+        <Stack justifyContent='center'>
+          {!loading ? (
+            <Stack>
+              <Stack height='300px' width='300px'>
+                <Chart result={result} rounds={simParams?.state.rounds} />
               </Stack>
-            ) : (
-              <Stack>
-                <CircularProgress />
+              <Stack direction='row' pt={2} justifyContent='center' spacing={2}>
+                <Typography>Wins: {result}</Typography>
+                <Typography>Loses: {loses}</Typography>
+                <Typography>Win%: {winPer}%</Typography>
               </Stack>
-            )}
-          </Stack>
-        ) : (
-          <Stack>
-            <Alert severity='error'>Something went wrong!</Alert>
-          </Stack>
-        )}
+            </Stack>
+          ) : (
+            <Stack>
+              <CircularProgress />
+            </Stack>
+          )}
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel} variant='outlined'>

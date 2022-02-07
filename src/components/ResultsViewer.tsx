@@ -52,18 +52,6 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
       .finally(() => setLoading(false))
   }, [simParams])
 
-  if (error)
-    return (
-      <DialogContent>
-        <Stack justifyContent='center'>
-          <Alert severity='error'>Something went wrong!</Alert>
-          <Button onClick={handleCancel} variant='outlined'>
-            Reset
-          </Button>
-        </Stack>
-      </DialogContent>
-    )
-
   return (
     <>
       <DialogTitle>Results</DialogTitle>
@@ -71,20 +59,27 @@ const ResultsViewer = ({ handleCancel }: PResultsView) => {
         <Stack justifyContent='center'>
           {!loading ? (
             <Stack>
-              <Stack height='300px' width='300px'>
-                {result && simParams?.state.rounds && !error ? (
-                  <Chart
-                    result={result && result}
-                    rounds={simParams?.state.rounds}
-                  />
+              <Stack height='auto' width='300px'>
+                {result && simParams?.state.rounds ? (
+                  <Stack>
+                    <Chart
+                      result={result && result}
+                      rounds={simParams?.state.rounds}
+                    />
+                    <Stack
+                      direction='row'
+                      pt={2}
+                      justifyContent='center'
+                      spacing={2}
+                    >
+                      <Typography>Wins: {result}</Typography>
+                      <Typography>Loses: {loses}</Typography>
+                      <Typography>Win%: {winPer}%</Typography>
+                    </Stack>
+                  </Stack>
                 ) : (
                   <Alert severity='error'>Something went wrong!</Alert>
                 )}
-              </Stack>
-              <Stack direction='row' pt={2} justifyContent='center' spacing={2}>
-                <Typography>{result ? `Wins: ${result}` : 'N/A'}</Typography>
-                <Typography>{loses ? `Loses: ${loses}` : 'N/A'}</Typography>
-                <Typography>{winPer ? `Win%: ${winPer}%` : 'N/A'}</Typography>
               </Stack>
             </Stack>
           ) : (

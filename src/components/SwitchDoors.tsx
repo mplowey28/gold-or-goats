@@ -1,67 +1,54 @@
-import { SyntheticEvent, useEffect, useState } from 'react'
-import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material'
-import Results from './Results'
+import { SyntheticEvent } from 'react'
+import { Button, DialogActions, DialogTitle } from '@mui/material'
+import { useSimParams } from '../context/SimContext'
 
-type SwitchDoorProps = {
-  open: boolean
-  rounds: number
-}
-const SwitchDoors = ({ open, rounds }: SwitchDoorProps) => {
-  const [switchOpen, setSwitchOpen] = useState<boolean>(false)
-  const [simParams, setSimParams] = useState<{
-    rounds: number
-    switch: boolean
-  }>({ rounds: 0, switch: false })
-
-  useEffect(() => {
-    rounds > 0 && !open && setSwitchOpen(true)
-  }, [open, rounds])
-
-  const handleClose = (event: SyntheticEvent<unknown>, reason?: string) => {
-    if (reason !== 'backdropClick') {
-      setSwitchOpen(false)
-    }
-  }
+const SwitchDoors = ({
+  handleCancel,
+  toggleDialogViewer,
+}: ItoggleDialogViewer) => {
+  const simParams = useSimParams()
 
   const handleChange = (e: SyntheticEvent<HTMLButtonElement>) => {
-    let data = { rounds: 0, switch: false }
     if (e.currentTarget.name === 'yes') {
-      data = { rounds: rounds, switch: true }
+      simParams?.dispatch({
+        type: 'setSimParams',
+        payload: { rounds: simParams.state.rounds, switch: true },
+      })
     }
     if (e.currentTarget.name === 'no') {
-      data = { rounds: rounds, switch: false }
+      simParams?.dispatch({
+        type: 'setSimParams',
+        payload: { rounds: simParams.state.rounds, switch: false },
+      })
     }
-    setSimParams(data)
-    setSwitchOpen(false)
+    toggleDialogViewer('switchSelector', false)
+    toggleDialogViewer('resultsView', true)
   }
 
   return (
     <>
-      <Dialog disableEscapeKeyDown open={switchOpen} onClose={handleClose}>
-        <DialogTitle sx={{ textAlign: 'center' }}>Switch Doors?</DialogTitle>
-        <DialogActions>
-          <Button onClick={handleChange} variant='outlined'>
-            Cancel
-          </Button>
-          <Button
-            name='yes'
-            color='success'
-            onClick={handleChange}
-            variant='outlined'
-          >
-            Yes
-          </Button>
-          <Button
-            name='no'
-            color='error'
-            onClick={handleChange}
-            variant='outlined'
-          >
-            No
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Results simParams={simParams} switchOpen={switchOpen} />
+      <DialogTitle sx={{ textAlign: 'center' }}>Switch Doors?</DialogTitle>
+      <DialogActions>
+        <Button onClick={handleCancel} variant='outlined'>
+          Cancel
+        </Button>
+        <Button
+          name='yes'
+          color='success'
+          onClick={handleChange}
+          variant='outlined'
+        >
+          Yes
+        </Button>
+        <Button
+          name='no'
+          color='error'
+          onClick={handleChange}
+          variant='outlined'
+        >
+          No
+        </Button>
+      </DialogActions>
     </>
   )
 }

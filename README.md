@@ -10,7 +10,7 @@ Testing is done with React testing library and Jest
 
 ## Demo
 
-[gold or goats]: (https://lucid-bose-c3c02f.netlify.app/)
+[gold or goats](https://lucid-bose-c3c02f.netlify.app/)
 
 ### Executing program
 
